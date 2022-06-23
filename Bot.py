@@ -10,7 +10,7 @@ from urllib.request import urlopen
 # список для сравнение с id старого поста
 old_posts = []
 oldhrefsautoru = []
-TOKEN = "5415251166:AAHnqC5exvCQxlWIEkoyLRoaptBuySfySGM"
+TOKEN = ""
 userId = ""
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot)
