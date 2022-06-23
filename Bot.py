@@ -10,10 +10,10 @@ from Autoru import autoruCars, firstAutoru
 
 
 TOKEN = "5415251166:AAHnqC5exvCQxlWIEkoyLRoaptBuySfySGM"
-userId = "342756595"
+# userId = "342756595"
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot)
-
+userId=''
 
 
 
@@ -64,8 +64,7 @@ async def scheduled(wait_for):
         except:
             pass
 
-
-if __name__ == "__main__":
+def strt():
     try:
         firstAutoru()
     except:
@@ -76,4 +75,14 @@ if __name__ == "__main__":
         pass
     loop = asyncio.get_event_loop()
     loop.create_task(scheduled(10))
+
+
+@dp.message_handler(commands=['start'])
+async def start(message):
+  global userId
+  userId= message.from_user.id
+  await bot.send_message(userId,f"{userId}")
+  strt()
+
+if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
