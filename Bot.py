@@ -11,7 +11,7 @@ from urllib.request import urlopen
 old_posts = []
 oldhrefsautoru = []
 TOKEN = "5415251166:AAHnqC5exvCQxlWIEkoyLRoaptBuySfySGM"
-userId = "342756595"
+userId = ""
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot)
 
