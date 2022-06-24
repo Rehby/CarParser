@@ -5,6 +5,7 @@ from aiogram import executor, Dispatcher, Bot
 
 from Avito import data,firstrun
 from Autoru import autoruCars, firstAutoru
+from Dromru import getDromruCars, firstDromru
 
 # список для сравнение с id старого поста
 
@@ -40,6 +41,17 @@ async def sendAutoru(querry):
                                        f"ВЛАДЕЛЕЦ:  {asd['carSeller']}\n"
                                        f"ССЫЛКА:  {asd['carHref']}", disable_notification=True)
 
+async def sendDromru(querry):
+    while querry:
+        asd = querry.pop(0)
+        await bot.send_message(userId, f"НАЗВАНИЕ ТОВАРА: {asd['carName']}\n"
+                                       f"ДАТА ПУБЛИКАЦИИ:  {asd['carTime']}\n"
+                                       f"ГОД ВЫПУСКА: {asd['carYear']}\n"
+                                       f"ПРОБЕГ:  {asd['carRange']}\n"
+                                       f"ЦЕНА  {asd['carPrice']}\n"
+                                       f"МЕСТОПОЛОЖЕНИЕ:  {asd['carPlace']}\n"
+                                       f"ССЫЛКА:  {asd['carHref']}", disable_notification=True)
+
 # тест на таймер
 async def scheduled(wait_for):
 
@@ -48,18 +60,26 @@ async def scheduled(wait_for):
         # отлавливаем обрыв соединения
         try:
             await asyncio.sleep(wait_for)
+
             print("Проверка на наличие товара")
+            # dromrucars = getDromruCars()
+            await  sendDromru(getDromruCars())
             # если нет товара
-            try:
-                avitocars = data()
-                await sendAvito(avitocars)
-            except:
-                pass
-            try:
-                autorucars = autoruCars()
-                await  sendAutoru(autorucars)
-            except:
-                pass
+            # try:
+            #     avitocars = data()
+            #     await sendAvito(avitocars)
+            # except:
+            #     pass
+            # try:
+            #     autorucars = autoruCars()
+            #     await  sendAutoru(autorucars)
+            # except:
+            #     pass
+            # try:
+            #     dromrucars = dromrucars()
+            #     await  sendDromru(dromrucars)
+            # except:
+            #     pass
 
         except:
             pass
@@ -71,6 +91,11 @@ def strt():
         pass
     try:
         firstrun()
+    except:
+        pass
+    try:
+        pass
+        # firstDromru()
     except:
         pass
     loop = asyncio.get_event_loop()
