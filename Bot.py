@@ -44,6 +44,7 @@ async def sendAutoru(querry):
 async def sendDromru(querry):
     while querry:
         asd = querry.pop(0)
+        print(asd)
         await bot.send_message(userId, f"НАЗВАНИЕ ТОВАРА: {asd['carName']}\n"
                                        f"ДАТА ПУБЛИКАЦИИ:  {asd['carTime']}\n"
                                        f"ГОД ВЫПУСКА: {asd['carYear']}\n"
@@ -62,8 +63,9 @@ async def scheduled(wait_for):
             await asyncio.sleep(wait_for)
 
             print("Проверка на наличие товара")
-            # dromrucars = getDromruCars()
-            await  sendDromru(getDromruCars())
+            dromrucars = getDromruCars()
+            await  sendDromru(dromrucars)
+
             # если нет товара
             # try:
             #     avitocars = data()
@@ -85,19 +87,19 @@ async def scheduled(wait_for):
             pass
 
 def strt():
-    try:
-        firstAutoru()
-    except:
-        pass
-    try:
-        firstrun()
-    except:
-        pass
-    try:
-        pass
-        # firstDromru()
-    except:
-        pass
+    # try:
+    #     firstAutoru()
+    # except:
+    #     pass
+    # try:
+    #     firstrun()
+    # except:
+    #     pass
+    # try:
+    #     pass
+    #     # firstDromru()
+    # except:
+    #     pass
     loop = asyncio.get_event_loop()
     loop.create_task(scheduled(10))
 

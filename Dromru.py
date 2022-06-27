@@ -38,9 +38,7 @@ def getDromruCars():
             carTime = car.find('div', class_="css-1x4jcds eotelyr0").find('div').text
             carPrice=car.find('span', class_='css-46itwz e162wx9x0').find('span').text
             carRange=car.find('span', class_='/html/body/div[2]/div[4]/div[1]/div[1]/div[5]/div/div[2]/a[1]/div[2]/div[2]/span[5]')
-            carPrice.replace("\xa0"," ")
-
-
+            print(carName)
             newPosts.append({"carHref":carHref,
                              "carName":carName,
                              "carTime":carTime,
