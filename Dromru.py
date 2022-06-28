@@ -6,19 +6,14 @@ newPosts=[]
 
 
 def getDromHtml():
-    print("here")
-    city = "orenburg."
-    site = f"https://{city}drom.ru/"
+    city = "orenburg"
+    site = f"https://{city}.drom.ru"
     price = "700000"
     url = f"{site}/auto/all/?maxprice={price}"
-    url = "https://auto.drom.ru/all/?maxprice=700000"
-    print(url)
     classname = "css-5l099z ewrty961"
     # скармливаем bs4
     html = urlopen(url)
-
     bs0bj = BeautifulSoup(html, "html.parser")
-     #
     cars = bs0bj.find_all('a', class_=classname)
 
     #
@@ -38,7 +33,6 @@ def getDromruCars():
             carTime = car.find('div', class_="css-1x4jcds eotelyr0").find('div').text
             carPrice=car.find('span', class_='css-46itwz e162wx9x0').find('span').text
             carRange=car.find('span', class_='/html/body/div[2]/div[4]/div[1]/div[1]/div[5]/div/div[2]/a[1]/div[2]/div[2]/span[5]')
-            print(carName)
             newPosts.append({"carHref":carHref,
                              "carName":carName,
                              "carTime":carTime,
@@ -54,6 +48,7 @@ def dromrucars():
     return newPosts
 
 def firstDromru():
+    global oldhrefs
     cars = getDromHtml()
     for car in cars:
         carHref = car['href']
