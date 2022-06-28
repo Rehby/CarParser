@@ -23,8 +23,8 @@ userId=[]
 async def sendAvito(querry):
     while querry:
         asd = querry.pop(0)
-
-        await bot.send_message(userId, f"ВРЕМЯ ДОБАВЛЕНИЕ ТОВАРА: { asd['time_vrem']}\n"
+        for chat in userId:
+            await bot.send_message(chat, f"ВРЕМЯ ДОБАВЛЕНИЕ ТОВАРА: { asd['time_vrem']}\n"
                                           f"НАЗВАНИЕ ТОВАРА: {asd['name_product']}\n"
                                           f"ЦЕНА {asd['price']}\n"
                                           f"ОПИСАНИЕ: {asd['infor']}\n"
@@ -65,7 +65,7 @@ async def sendAutoru2(querry):
 async def sendDromru(querry):
     while querry:
         asd = querry.pop(0)
-        print(asd)
+
         for chat in userId:
             await bot.send_message(chat, f"НАЗВАНИЕ ТОВАРА: {asd['carName']}\n"
                                        f"ДАТА ПУБЛИКАЦИИ:  {asd['carTime']}\n"
@@ -91,11 +91,11 @@ async def scheduled(wait_for):
             autoru=getdata()
             await sendAutoru2(autoru)
             # если нет товара
-            # try:
-            #     avitocars = data()
-            #     await sendAvito(avitocars)
-            # except:
-            #     pass
+            try:
+                avitocars = data()
+                await sendAvito(avitocars)
+            except:
+                pass
 
 
 
@@ -107,10 +107,10 @@ def strt():
     #     firstAutoru()
     # except:
     #     pass
-    # try:
-    #     firstrun()
-    # except:
-    #     pass
+    try:
+        firstrun()
+    except:
+        pass
     try:
         firstDromru()
     except:
@@ -125,5 +125,12 @@ async def start(message):
   userId.append( message.from_user.id)
   strt()
 
+async def test(wait_for):
+    while True:
+        await asyncio.sleep(wait_for)
+        avitocars = data()
+        await sendAvito(avitocars)
+
 if __name__ == '__main__':
+
     executor.start_polling(dp, skip_updates=True)

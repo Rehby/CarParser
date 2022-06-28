@@ -39,7 +39,7 @@ def goTelegram(product):
     return time_vrem, name_product, price, infor.replace('\n', ''), name_user, more
 
 def getAvitoCars():
-    url="https://www.avito.ru/rossiya/avtomobili/do-500000-rubley-ASgCAgECAUXGmgwWeyJmcm9tIjowLCJ0byI6NTAwMDAwfQ?cd=1&f=ASgCAQECAUD2xA0UvrA6AUXGmgwWeyJmcm9tIjowLCJ0byI6NTAwMDAwfQ&i=1&radius=100&s=104"
+    url="https://www.avito.ru/orenburg/avtomobili/do-700000-rubley-ASgCAgECAUXGmgwWeyJmcm9tIjowLCJ0byI6NzAwMDAwfQ?i=1&presentationType=serp&radius=50&s=104&searchForm=true"
      # скармливаем bs4
     html = urlopen(url)
     bs0bj = BeautifulSoup(html, "html.parser")
@@ -54,8 +54,10 @@ def getAvitoCars():
 
 def data():
     cars = getAvitoCars()
+
     for product in cars:
         if (posts.count(product['id']) == 0):
+
             posts.append(product['id'])
             time_vrem, name_product, price, infor, name_user, more = goTelegram(product)
 
