@@ -11,6 +11,7 @@ querry=[]
 
 
 def goTelegram(product):
+
     time_vrem = product.find("div", {"data-marker": "item-date"}).get_text()
 
     # цена
@@ -23,8 +24,7 @@ def goTelegram(product):
         "class": "iva-item-text-Ge6dR iva-item-description-FDgK4 text-text-LurtD text-size-s-BxGpL"}).get_text()
     # ссыка на товар
 
-    more = product.find("div", class_="iva-item-titleStep-pdebR").find("a").get("href")
-    more = "https://www.avito.ru" + more
+
 
     # имя владельца товара
     try:
@@ -36,7 +36,7 @@ def goTelegram(product):
     for item in rep:
         if item in price:
             price = price.replace(item, "")
-    return time_vrem, name_product, price, infor.replace('\n', ''), name_user, more
+    return time_vrem, name_product, price, infor.replace('\n', ''), name_user
 
 def getAvitoCars():
     url="https://www.avito.ru/orenburg/avtomobili/do-700000-rubley-ASgCAgECAUXGmgwWeyJmcm9tIjowLCJ0byI6NzAwMDAwfQ?i=1&presentationType=serp&radius=50&s=104&searchForm=true"
@@ -56,10 +56,13 @@ def data():
     cars = getAvitoCars()
 
     for product in cars:
-        if (posts.count(product['id']) == 0):
+        more = product.find("div", class_="iva-item-titleStep-pdebR").find("a").get("href")
 
+
+        if (posts.count(product['id']) == 0 and more.includes('orenburg')):
+            more = "https://www.avito.ru" + more
             posts.append(product['id'])
-            time_vrem, name_product, price, infor, name_user, more = goTelegram(product)
+            time_vrem, name_product, price, infor, name_user = goTelegram(product)
 
             querry.append(
                 {"time_vrem": time_vrem, "name_product": name_product, "price": price, "infor": infor,
