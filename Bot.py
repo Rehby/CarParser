@@ -5,7 +5,7 @@ from aiogram import executor, Dispatcher, Bot
 
 from Avito import data,firstrun
 from Autoru import autoruCars, firstAutoru
-from Dromru import getDromruCars, firstDromru
+from Dromru import getDromruCars
 from AutoruV2 import getdata
 
 # список для сравнение с id старого поста
@@ -69,7 +69,6 @@ async def sendDromru(querry):
         for chat in userId:
             await bot.send_message(chat, f"НАЗВАНИЕ ТОВАРА: {asd['carName']}\n"
                                        f"ДАТА ПУБЛИКАЦИИ:  {asd['carTime']}\n"
-                                       f"ПРОБЕГ:  {asd['carRange']}\n"
                                        f"ЦЕНА  {asd['carPrice']}\n"
                                        f"МЕСТОПОЛОЖЕНИЕ:  {asd['carPlace']}\n"
                                        f"ССЫЛКА:  {asd['carHref']}", disable_notification=True)
@@ -86,16 +85,17 @@ async def scheduled(wait_for):
         try:
             print("Проверка на наличие товара")
             dromrucars = getDromruCars()
+            
             await  sendDromru(dromrucars)
 
-            autoru=getdata()
-            await sendAutoru2(autoru)
-            # если нет товара
-            try:
-                avitocars = data()
-                await sendAvito(avitocars)
-            except:
-                pass
+            # autoru=getdata()
+            # await sendAutoru2(autoru)
+            # # если нет товара
+            # try:
+            #     avitocars = data()
+            #     await sendAvito(avitocars)
+            # except:
+            #     pass
 
 
 
@@ -112,7 +112,8 @@ def strt():
     except:
         pass
     try:
-        firstDromru()
+        pass
+        # firstDromru()
     except:
         pass
     loop = asyncio.get_event_loop()
@@ -121,9 +122,11 @@ def strt():
 
 @dp.message_handler(commands=['start'])
 async def start(message):
-  global userId
-  userId.append( message.from_user.id)
-  strt()
+    global userId
+    userId.append( message.from_user.id)
+# strt()
+    loop = asyncio.get_event_loop()
+    loop.create_task(scheduled(10))
 
 async def test(wait_for):
     while True:
